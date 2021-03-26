@@ -5,13 +5,11 @@ import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.Spinner
 
-inline fun <reified T : Any> Spinner.getItem(): T? {
-    val item = selectedItem
-    return when (item) {
+inline fun <reified T : Any> Spinner.getItem(): T? =
+    when (val item = selectedItem) {
         is T -> item
         else -> null
     }
-}
 
 @Suppress("UNCHECKED_CAST") fun <T> Spinner.onItemSelected(func: (T) -> Unit) {
     onItemSelectedListener = object: AdapterView.OnItemSelectedListener {

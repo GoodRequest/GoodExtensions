@@ -28,13 +28,13 @@ fun View.color(@ColorRes id: Int) = ContextCompat.getColor(context, id)
 fun View.drawable(@DrawableRes id: Int) = ContextCompat.getDrawable(context, id)!!
 fun View.dimen(@DimenRes id: Int) = resources.getDimension(id)
 fun View.string(@StringRes id: Int): String = resources.getString(id)
-fun View.formattedString(@StringRes id: Int, vararg args: Any): String = context.getString(id, *args)
+fun View.string(@StringRes id: Int, vararg args: Any): String = context.getString(id, *args)
 
 fun View.px(dp: Int) = (dp * (resources.displayMetrics.densityDpi / 160f)).toInt()
 fun View.dp(px: Int) = (px / (resources.displayMetrics.densityDpi / 160f)).toInt()
 
-inline infix fun View.onClick(crossinline action: () -> Unit) = debounceClick { action() }
-inline infix fun View.onClickWithoutDebounce(crossinline action: () -> Unit) = setOnClickListener { action() }
+inline infix fun View.onClick(crossinline action: () -> Unit) = setOnClickListener { action() }
+inline infix fun View.onClickDebounce(crossinline action: () -> Unit) = debounceClick { action() }
 
 fun View.toast(message: String) = Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 
@@ -44,6 +44,16 @@ val View.activity: AppCompatActivity get() =
 
 inline fun <reified A: Activity> View.start() = context.startActivity(Intent(context, A::class.java))
 inline fun <reified A: Activity> View.start(config: Intent.() -> Unit) = context.startActivity(Intent(context, A::class.java).apply(config))
+
+inline fun <reified A: Activity> View.startClearTop() =
+    context.startActivity(Intent(context, A::class.java).apply {
+        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+    })
+
+inline fun <reified A: Activity> View.startClearTop(intentBuilder: Intent.() -> Unit = {}) =
+    context.startActivity(Intent(context, A::class.java).apply(intentBuilder).apply {
+        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+    })
 
 inline fun View.onAttachState(
     crossinline onAttach: () -> Unit,

@@ -10,9 +10,18 @@ var TextView.string: String
     get() = text.toString()
     set(msg) { text = msg }
 
+var TextView.nullString: String?
+    get() = text.toString()
+    set(msg) { text = msg }
+
 fun TextView.isEmpty(): Boolean = this.text.isEmpty()
 infix fun TextView.setTextIfEmpty(text: String) { if(isEmpty()) this.text = text }
 infix fun TextView.setTextOrGone(text: String) { goneIf(text.isBlank()); this.text = text }
+
+fun TextView.setTextOrInvisible(text: CharSequence?)                                     { invisibleIf(text?.isBlank() != false || text == "null"); this.text = text }
+fun TextView.setTextOrGoneIf(text: CharSequence, block: CharSequence.() -> Boolean)      { goneIf(block(text)); this.text = text }
+fun TextView.setTextOrInvisibleIf(text: CharSequence, block: CharSequence.() -> Boolean) { invisibleIf(block(text)); this.text = text }
+
 
 fun TextView.onTextChange(action: (String) -> Unit) =
     addTextChangedListener(object : TextWatcher {

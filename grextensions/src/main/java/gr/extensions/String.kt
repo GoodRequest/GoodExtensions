@@ -8,3 +8,5 @@ fun String.toHtml() =
     } else {
         Html.fromHtml(this)
     }
+
+fun CharSequence?.isNotBlank(): Boolean = this != null && !isBlank()
