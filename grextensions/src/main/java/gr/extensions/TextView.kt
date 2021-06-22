@@ -15,10 +15,10 @@ var TextView.nullString: String?
     set(msg) { text = msg }
 
 fun TextView.isEmpty(): Boolean = this.text.isEmpty()
-infix fun TextView.setTextIfEmpty(text: String) { if(isEmpty()) this.text = text }
-infix fun TextView.setTextOrGone(text: String) { goneIf(text.isBlank()); this.text = text }
+infix fun TextView.setTextIfEmpty(text: String?) { if(isEmpty() && text != null) this.text = text }
+infix fun TextView.setTextOrGone(text: String?)  { goneIf(text.isNullOrEmpty()); this.text = text }
 
-fun TextView.setTextOrInvisible(text: CharSequence?)                                     { invisibleIf(text?.isBlank() != false || text == "null"); this.text = text }
+fun TextView.setTextOrInvisible(text: CharSequence?)                                     { invisibleIf(text.isNullOrEmpty()); this.text = text }
 fun TextView.setTextOrGoneIf(text: CharSequence, block: CharSequence.() -> Boolean)      { goneIf(block(text)); this.text = text }
 fun TextView.setTextOrInvisibleIf(text: CharSequence, block: CharSequence.() -> Boolean) { invisibleIf(block(text)); this.text = text }
 

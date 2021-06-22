@@ -15,7 +15,9 @@ fun ViewBinding.color(@ColorRes id: Int) = root.color(id)
 fun ViewBinding.drawable(@DrawableRes id: Int) = root.drawable(id)
 fun ViewBinding.dimen(@DimenRes id: Int) = root.dimen(id)
 fun ViewBinding.string(@StringRes id: Int): String = root.string(id)
-fun ViewBinding.string(@StringRes id: Int, vararg args: Any): String = root.string(id, args)
+fun ViewBinding.string(@StringRes id: Int, vararg args: Any): String = root.string(id, *args)
+inline fun <reified T: Number> ViewBinding.dimen(@DimenRes id: Int): T = root.dimen<T>(id)
+
 
 inline fun <reified A: Activity> ViewBinding.start() = root.start<A>()
 inline fun <reified A: Activity> ViewBinding.start(config: Intent.() -> Unit) = root.start<A>(config)

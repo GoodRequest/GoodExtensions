@@ -30,6 +30,16 @@ fun View.dimen(@DimenRes id: Int) = resources.getDimension(id)
 fun View.string(@StringRes id: Int): String = resources.getString(id)
 fun View.string(@StringRes id: Int, vararg args: Any): String = context.getString(id, *args)
 
+inline fun <reified T: Number> View.dimen(@DimenRes id: Int): T = with(dimen(id)) {
+    when (T::class) {
+        Float::class  -> this
+        Double::class -> toDouble()
+        Int::class    -> toInt()
+        Long::class   -> toLong()
+        else          -> throw IllegalArgumentException("Type ${T::class.simpleName} not supported")
+    } as T
+}
+
 fun View.px(dp: Int) = (dp * (resources.displayMetrics.densityDpi / 160f)).toInt()
 fun View.dp(px: Int) = (px / (resources.displayMetrics.densityDpi / 160f)).toInt()
 
@@ -41,6 +51,8 @@ fun View.toast(message: String) = Toast.makeText(context, message, Toast.LENGTH_
 val View.activity: AppCompatActivity get() =
     if(context is AppCompatActivity) context as AppCompatActivity
     else (context as ContextWrapper).baseContext as AppCompatActivity
+
+fun View.hideKeyboard() = context.inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 
 inline fun <reified A: Activity> View.start() = context.startActivity(Intent(context, A::class.java))
 inline fun <reified A: Activity> View.start(config: Intent.() -> Unit) = context.startActivity(Intent(context, A::class.java).apply(config))
