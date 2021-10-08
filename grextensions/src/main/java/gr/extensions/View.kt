@@ -9,8 +9,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.annotation.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import java.util.concurrent.atomic.AtomicBoolean
 
 fun View.visible()   { visibility = View.VISIBLE }
@@ -24,8 +22,6 @@ fun View.visibleIf(condition: Boolean) { visibility = if(condition) View.VISIBLE
 fun View.invisibleIf(condition: Boolean) { visibility = if(condition) View.INVISIBLE else View.VISIBLE }
 fun View.goneIf(condition: Boolean) = visibleIf(!condition)
 
-fun View.color(@ColorRes id: Int) = ContextCompat.getColor(context, id)
-fun View.drawable(@DrawableRes id: Int) = ContextCompat.getDrawable(context, id)!!
 fun View.dimen(@DimenRes id: Int) = resources.getDimension(id)
 fun View.string(@StringRes id: Int): String = resources.getString(id)
 fun View.string(@StringRes id: Int, vararg args: Any): String = context.getString(id, *args)
@@ -48,9 +44,9 @@ inline infix fun View.onClickDebounce(crossinline action: () -> Unit) = debounce
 
 fun View.toast(message: String) = Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 
-val View.activity: AppCompatActivity get() =
-    if(context is AppCompatActivity) context as AppCompatActivity
-    else (context as ContextWrapper).baseContext as AppCompatActivity
+val View.activity: Activity get() =
+    if(context is Activity) context as Activity
+    else (context as ContextWrapper).baseContext as Activity
 
 fun View.hideKeyboard() = context.inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 
