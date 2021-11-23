@@ -35,7 +35,6 @@ fun Context.color(@ColorRes id: Int)            = ContextCompat.getColor(this, i
 fun Context.drawable(@DrawableRes id: Int)      = ContextCompat.getDrawable(this, id)
 fun Context.dimen(@DimenRes id: Int)            = resources.getDimension(id)
 fun Context.string(id: Int): String             = resources.getString(id)
-fun Context.string(id: Int, vararg params: Any) = String.format(resources.getString(id), *params)
 fun Context.bitmap(@DrawableRes img: Int)       = BitmapFactory.decodeResource(resources, img)
 
 inline fun <reified A: Activity> Context.start() = startActivity(Intent(this, A::class.java))

@@ -28,7 +28,6 @@ fun View.color(@ColorRes id: Int) = ContextCompat.getColor(context, id)
 fun View.drawable(@DrawableRes id: Int) = ContextCompat.getDrawable(context, id)!!
 fun View.dimen(@DimenRes id: Int) = resources.getDimension(id)
 fun View.string(@StringRes id: Int): String = resources.getString(id)
-fun View.string(@StringRes id: Int, vararg args: Any): String = context.getString(id, *args)
 
 inline fun <reified T: Number> View.dimen(@DimenRes id: Int): T = with(dimen(id)) {
     when (T::class) {
