@@ -10,7 +10,6 @@ import androidx.viewbinding.ViewBinding
 
 fun ViewBinding.dimen(@DimenRes id: Int) = root.dimen(id)
 fun ViewBinding.string(@StringRes id: Int): String = root.string(id)
-fun ViewBinding.string(@StringRes id: Int, vararg args: Any): String = root.string(id, *args)
 inline fun <reified T: Number> ViewBinding.dimen(@DimenRes id: Int): T = root.dimen<T>(id)
 
 

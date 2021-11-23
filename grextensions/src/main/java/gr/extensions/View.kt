@@ -24,7 +24,6 @@ fun View.goneIf(condition: Boolean) = visibleIf(!condition)
 
 fun View.dimen(@DimenRes id: Int) = resources.getDimension(id)
 fun View.string(@StringRes id: Int): String = resources.getString(id)
-fun View.string(@StringRes id: Int, vararg args: Any): String = context.getString(id, *args)
 
 inline fun <reified T: Number> View.dimen(@DimenRes id: Int): T = with(dimen(id)) {
     when (T::class) {
